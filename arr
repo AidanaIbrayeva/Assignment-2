@@ -23,5 +23,13 @@ public class MyArrayList<E> implements List<E> {
         return true;
     }
 
+    @Override
+    public E get(int index) {
+        if (index < 0 || index >= this.size) {
+            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + this.size);
+        }
+        return (E) this.elements[index];
+    }
+
     // Other methods of the List interface
 }
