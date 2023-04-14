@@ -61,8 +61,7 @@ public class MyArrayList<E> implements MyList<E> {
 //    System.out.println(list.get(1)); // Output: 3
 }
 
-
-
+//code for MyLinkedList:
 
 
 public class MyLinkedList<E> implements MyList<E> {
