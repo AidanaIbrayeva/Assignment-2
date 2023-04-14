@@ -1,35 +1,43 @@
 public class MyArrayList<E> implements List<E> {
+
     private Object[] elements;
     private int size;
 
     public MyArrayList() {
-        this.elements = new Object[10];
-        this.size = 0;
+        elements = new Object[10]; // initialize with default size of 10
+        size = 0;
     }
 
     @Override
     public boolean add(E element) {
-        if (this.size == this.elements.length) {
-            // create a new array with double the size of the original array
-            Object[] newElements = new Object[this.size * 2];
-            // copy over the elements from the original array
-            for (int i = 0; i < this.size; i++) {
-                newElements[i] = this.elements[i];
-            }
-            this.elements = newElements;
+        if (size == elements.length) {
+            Object[] newElements = new Object[2 * size];
+            System.arraycopy(elements, 0, newElements, 0, size);
+            elements = newElements;
         }
-        this.elements[this.size] = element;
-        this.size++;
+        elements[size++] = element;
         return true;
     }
 
     @Override
     public E get(int index) {
-        if (index < 0 || index >= this.size) {
-            throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + this.size);
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
         }
-        return (E) this.elements[index];
+        return (E) elements[index];
     }
 
-    // Other methods of the List interface
+    @Override
+    public E remove(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException();
+        }
+        E removedElement = (E) elements[index];
+        System.arraycopy(elements, index + 1, elements, index, size - index - 1);
+        elements[--size] = null; // to prevent memory leak
+        return removedElement;
+    }
+
+    // other methods of List interface can be implemented here
+
 }
