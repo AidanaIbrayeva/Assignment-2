@@ -1,21 +1,26 @@
 public class MyArrayList<E> implements List<E> {
-
+    
     private Object[] elements;
     private int size;
-
+    
     public MyArrayList() {
-        elements = new Object[10]; // initialize with default size of 10
-        size = 0;
+        this.elements = new Object[10];
+        this.size = 0;
+    }
+
+    private void resize() {
+        Object[] newElements = new Object[elements.length * 2];
+        System.arraycopy(elements, 0, newElements, 0, size);
+        elements = newElements;
     }
 
     @Override
     public boolean add(E element) {
         if (size == elements.length) {
-            Object[] newElements = new Object[2 * size];
-            System.arraycopy(elements, 0, newElements, 0, size);
-            elements = newElements;
+            resize();
         }
-        elements[size++] = element;
+        elements[size] = element;
+        size++;
         return true;
     }
 
@@ -33,8 +38,11 @@ public class MyArrayList<E> implements List<E> {
             throw new IndexOutOfBoundsException();
         }
         E removedElement = (E) elements[index];
-        System.arraycopy(elements, index + 1, elements, index, size - index - 1);
-        elements[--size] = null; // to prevent memory leak
+        for (int i = index; i < size - 1; i++) {
+            elements[i] = elements[i+1];
+        }
+        elements[size-1] = null;
+        size--;
         return removedElement;
     }
 
@@ -42,6 +50,5 @@ public class MyArrayList<E> implements List<E> {
     public int size() {
         return size;
     }
-
 
 }
