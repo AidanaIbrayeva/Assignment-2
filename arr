@@ -38,6 +38,10 @@ public class MyArrayList<E> implements List<E> {
         return removedElement;
     }
 
-    // other methods of List interface can be implemented here
+    @Override
+    public int size() {
+        return size;
+    }
+
 
 }
